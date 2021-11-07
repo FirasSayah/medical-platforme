@@ -1,0 +1,354 @@
+<link rel="stylesheet" href="bower_components/angular-loading/angular-loading.css"/>
+
+
+<div ng-show="!aa.location">
+  <center>
+
+  <img width="30%" src="assets/images/updatelocation.png">
+  </center>
+
+          <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+
+            <center>
+
+
+
+
+              <div id="dvMap" style="width: 700px; height: 500px;">
+              </div>
+            <p class="help-block"> {{ message }} </p>
+
+            <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+
+            </center>
+
+          </form>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<div ng-show="patients.items.length==0 && aa.location">
+  <img src="assets/images/no patient found.png">
+</div>
+<div infinite-scroll='scroll()' infinite-scroll-disabled='patients.busy' infinite-scroll-distance='1'>
+  <div class="row patients" dw-loading="patients" dw-loading-options="{text: ''}">
+
+
+    <div style="width: 120%;">
+      <!-- PRICING-TABLE CONTAINER -->
+      <div class="pricing-table">
+        <div ng-repeat="patient in patients.items"
+             ng-if="(isHotel())">
+
+
+          <div class="block personal fl" ng-if="!patient.critical" style="width: 25%">
+            <h2 class="title">{{patient.firstName}} {{patient.lastName}}</h2>
+            <!-- CONTENT -->
+            <div class="content">
+              <img src="assets/images/critical non.png">
+
+              </img>
+            </div>
+            <!-- /CONTENT -->
+            <!-- FEATURES -->
+            <ul class="features">
+              <center>
+                <li style="font-size: 15px;">Age: {{patient.age}}</li>
+                <li style="font-size: 15px;">Gender: {{patient.gender}}</li>
+                <li><a class="btn btn-default">
+
+                  <div class="btn" ng-class="{true:'btn-success', false:''}[patient.name]" data-toggle="modal"
+                       data-target="#patient-confirmation{{patient._id}}">
+                    Added to my list
+                  </div>
+
+                </a></li>
+                <li>
+                  <a class="btn btn-default btn-sm btn-success" data-toggle="modal"
+                     data-target="#patient-info{{patient._id}}"> Details</a>
+                </li>
+
+              </center>
+            </ul>
+
+            <!-- /FEATURES -->
+            <!-- PT-FOOTER -->
+            <!-- /PT-FOOTER -->
+          </div>
+
+          <div class="block business fl" ng-if="patient.critical" style="width: 25%">
+            <h2 class="title">{{patient.firstName}} {{patient.lastName}}</h2>
+            <!-- CONTENT -->
+            <div class="content">
+              <div class="content">
+                <img src="assets/images/critical.png" height="226px">
+
+                </img>
+              </div>
+            </div>
+            <!-- /CONTENT -->
+
+            <!-- FEATURES -->
+            <ul class="features">
+              <center>
+                <li style="font-size: 15px;">Age: {{patient.age}}</li>
+                <li style="font-size: 15px;">Disease: {{patient.historyOfTheDisease}}</li>
+                <li><a class="btn btn-default">
+
+                  <div class="btn" ng-class="{true:'btn-success', false:''}[patient.name]" data-toggle="modal"
+                       data-target="#patient-confirmation{{patient._id}}" >
+                    Added to my list
+                  </div>
+
+                </a></li>
+                <li>
+                  <a class="btn btn-default btn-sm btn-success" data-toggle="modal"
+                     data-target="#patient-info{{patient._id}}"> Details</a>
+              </center>
+            </ul>
+            <!-- /FEATURES -->
+
+            <!-- PT-FOOTER -->
+
+            <!-- /PT-FOOTER -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- /.col-md-4 -->
+  </div>
+  <!-- /.patients -->
+
+</div>
+<!-- /.col-md-9 -->
+</div> <!-- /just to enable infinite scroll -->
+
+
+<div ng-repeat="patient in patients.items">
+  <div class="modal" id="patient-info{{patient._id}}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- more usage of angular data binding -->
+          <h2>{{activePatient.lastName}}</h2>
+        </div>
+        <div class="modal-body">
+          <center>
+            <div ng-if="patient.critical">
+              <img src="assets/images/criticalcondition.png">
+            </div>
+            <div ng-if="!patient.critical">
+              <img src="assets/images/noncriticalcondition.png">
+            </div>
+          </center>
+          <div>
+            <div class="" id="details">
+
+              <div>
+                <div>
+                  <h4>Patient details</h4>
+                  <li>Name: {{patient.firstName}} {{patient.lastName}}</li>
+                  <li>From: {{patient.from}}</li>
+                  <li>Association: {{patient.uid}}</li>
+                </div>
+
+
+              </div>
+              <blockquote>
+
+                <a class="btn btn-default">
+
+                  <div class="btn" ng-class="{true:'btn-success', false:''}[patient.name]" data-toggle="modal"
+                       data-target="#patient-confirmation{{patient._id}}" >
+                    Added to my list
+                  </div>
+
+                </a>
+              </blockquote>
+
+              <hr>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="patient-confirmation{{patient._id}}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- more usage of angular data binding -->
+          <center><h3>{{patient.firstName}} {{patient.lastName}}</h3></center>
+        </div>
+        <div class="modal-body">
+          <center>
+
+            <h1>Are you sure to add this patient to your list ?</h1>
+          </center>
+          <div>
+
+
+            <br><br><br><br>
+
+
+            <div class="">
+              <div>
+                <center>
+                  <a data-dismiss="modal" aria-label="Close">
+                    <div class="btn btn-danger">
+                      Cancel
+                    </div>
+                  </a>
+                  <a data-dismiss="modal" aria-label="Close" ng-click="createHotel(patient);">
+                    <div class="btn btn-success">
+                      Confirm
+                    </div>
+                  </a>
+                </center>
+              </div>
+
+              <div>
+
+              </div>
+            </div>
+            </blockquote>
+
+            <hr>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiPsrwiJnGZmu3MGDppHm8XX8cl9NK25s&pl&libraries=places&callback=initMap" async defer></script>
+
+<script>
+  function initMap($script){
+    var mapOptions = {
+      center: new google.maps.LatLng(36.8, 10.1),
+      zoom: 7,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    var infoWindow = new google.maps.InfoWindow();
+    var latlngbounds = new google.maps.LatLngBounds();
+    var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+    google.maps.event.addListener(map,
+      'click',
+      function (e) {
+        marker.setPosition(e.latLng);
+        /*marke
+         $('#lat').val(lat);
+         $('#lng').val(lng);*/
+        /*$.ajax({
+         url: "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=true",
+         success: function (res) {
+         console.log(res.results[0].formatted_address);
+         }
+         })*/
+        var latlng = marker.getPosition();
+        var geocoder = geocoder = new google.maps.Geocoder();
+        console.log($("input[name='newlocation']"));
+
+        geocoder.geocode({ 'latLng': latlng },
+          function (results, status) {
+            console.log($("input[name='newlocation']"));
+
+            if (status == google.maps.GeocoderStatus.OK) {
+              var country = results[results.length-1].formatted_address;
+              $("input[name='newlocation']").val(country);
+              $("input[name='newlocation']").attr('[ng-model="user.newlocation"]',country);
+              console.log("erthj,n");
+
+            }
+          });
+      }
+
+    );
+    marker = new google.maps.Marker({
+      map: map,
+      draggable: true,
+      animation: google.maps.Animation.DROP,
+      position: { lat: 36.8, lng: 10.1 }
+    });
+    marker.addListener('click', toggleBounce);
+    //marker.setPosition(tx);
+    google.maps.event.addListener(marker,
+      'dragend',
+      function () {
+        var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+        /*marke
+         $('#lat').val(lat);
+         $('#lng').val(lng);*/
+        /*$.ajax({
+         url: "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=true",
+         success: function (res) {
+         console.log(res.results[0].formatted_address);
+         }
+         })*/
+        var latlng = new google.maps.LatLng(lat, lng);
+        var geocoder = geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'latLng': latlng },
+          function (results, status) {
+            console.log(results);
+            if (status == google.maps.GeocoderStatus.OK) {
+              var country = results[results.length - 1].formatted_address;
+              $("input[name='newlocation']").val(country);
+              $("input[name='newlocation']").attr('ng-init',country);
+              window.loca=results[results.length - 1].formatted_address;
+            }
+          });
+      });
+    google.maps.event.addListener(marker,
+      'tx',
+      function () {
+        var tx = marker.setPosition().tx();
+        $('#tx').val(tx);
+
+      });
+  }
+
+  function toggleBounce() {
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  }
+
+
+
+</script>

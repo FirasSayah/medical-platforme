@@ -1,0 +1,111 @@
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+
+<div class="container" style="margin-left: 22%">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-12">
+      <div class="box">
+        <h3>Edit Agency Profil</h3>
+        <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+
+          <div class="form-group">
+            <label>Current Password</label>
+
+            <input type="password" name="oldPassword" class="form-control" ng-model="user.oldPassword"
+                   mongoose-error placeholder="Old password"/>
+            <p class="help-block" ng-show="form.password.$error.mongoose">
+              {{ errors.other }}
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label>New Password</label>
+
+            <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
+                   ng-minlength="3"
+                   required placeholder="Set a new password"/>
+            <p class="help-block"
+               ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
+              Password must be at least 3 characters.
+            </p>
+          </div>
+          <div class="form-group"ng-show="isLoggedIn()" >
+            <label>New Name</label>
+            <input type="text" name="newName" class="form-control" ng-model="user.newName"
+                   ng-minlength="3"
+                   required placeholder="{{getCurrentUser().name}}">
+            <p class="help-block"
+               ng-show="(form.newName.$error.minlength || form.newName.$error.required) && (form.newName.$dirty || submitted)">
+              Name must be at least 3 characters.
+            </p>
+          </div>
+          <div class="form-group"ng-show="isLoggedIn()" >
+          <label>New Departure Date (dd/mm/yyyy)</label>
+          <input type="text" name="newdepartureDate" class="form-control" ng-model="user.newdepartureDate"
+                 ng-minlength="3"
+                 required placeholder="{{getCurrentUser().newdepartureDate}}">
+          <p class="help-block"
+             ng-show="(form.newdepartureDate.$error.minlength || form.newdepartureDate.$error.required) && (form.newdepartureDate.$dirty || submitted)">
+            Name must be at least 3 characters.
+          </p>
+        </div>
+          <div class="form-group"ng-show="isLoggedIn()" >
+            <label>New Departure Date 2(dd/mm/yyyy)</label>
+            <input type="text" name="newdepartureDate2" class="form-control" ng-model="user.newdepartureDate2"
+                   ng-minlength="3"
+                   required placeholder="{{getCurrentUser().newdepartureDate}}">
+            <p class="help-block"
+               ng-show="(form.newdepartureDate2.$error.minlength || form.newdepartureDate2.$error.required) && (form.newdepartureDate2.$dirty || submitted)">
+              Name must be at least 3 characters.
+            </p>
+          </div>
+          <div class="form-group"ng-show="isLoggedIn()" >
+            <label>New Departure Date 3(dd/mm/yyyy)</label>
+            <input type="text" name="newdepartureDate3" class="form-control" ng-model="user.newdepartureDate3"
+                   ng-minlength="3"
+                   required placeholder="{{getCurrentUser().newdepartureDate}}">
+            <p class="help-block"
+               ng-show="(form.newdepartureDate3.$error.minlength || form.newdepartureDate3.$error.required) && (form.newdepartureDate3.$dirty || submitted)">
+              Name must be at least 3 characters.
+            </p>
+          </div>
+
+          <div class="form-group" ng-class="{ 'has-success': form.neweMail.$valid && submitted,
+                                                  'has-error': form.neweMail.$invalid && submitted }"ng-show="isLoggedIn()" >
+            <label>Email</label>
+
+            <input type="email" name="neweMail" class="form-control" ng-model="user.neweMail"
+                   required
+                   mongoose-error placeholder="{{getCurrentUser().email}}"/>
+            <p class="help-block" ng-show="form.neweMail.$error.neweMail && submitted">
+              Doesn't look like a valid email.
+            </p>
+            <p class="help-block" ng-show="form.neweMail.$error.required && submitted">
+              What's your email address?
+            </p>
+            <p class="help-block" ng-show="form.neweMail.$error.mongoose">
+              {{ errors.neweMail }}
+            </p>
+
+          </div>
+
+
+
+
+
+
+          <p class="help-block"> {{ message }} </p>
+
+          <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+
+</div>
+

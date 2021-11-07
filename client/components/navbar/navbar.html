@@ -1,0 +1,401 @@
+<div ng-show="isLoggedIn()">
+<div ng-controller="NavbarCtrl" >
+<!-- *** TOPBAR ***
+_________________________________________________________ -->
+
+
+
+<style>
+  .disabled {
+    pointer-events:none;
+  opacity:0.6;
+  }
+</style>
+
+
+<div id="top">
+    <div class="container">
+        <div class="col-md-6 offer" data-animate="fadeInDown">
+        </div>
+        <div class="col-md-6" data-animate="fadeInDown">
+            <ul class="menu">
+              <li ng-show="isAdmin()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
+              <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
+              <li ng-show="isLoggedIn()"><a href="">Hello {{ getCurrentUser().name }} </a></li>
+              <li class="dropdown" ng-show="isLoggedIn()" dropdown="">
+                <a href="#" dropdown-toggle="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-dashboard">&nbsp;</i>Dashboard {{ getCurrentUser().role }}<b class="caret"></b>
+                  </a>
+                <ul class="dropdown-menu" role="menu">
+
+                  <!--
+
+                  Admin navbar settings
+
+                  -->
+               <li ng-show="isAdmin()" ng-class="{active: isActive('/customer')}">
+                    <a href="/customer"><i class="fa fa-truck">&nbsp;</i>Users</a>
+                  </li>
+                   <li ng-show="isAdmin()" ng-class="{active: isActive('/create')}">
+                  <a href="/create"><i class="fa fa-ticket">&nbsp;</i>Create user</a>
+                </li>
+                  <li class="disabled" ng-show="isAdmin()" >
+                    <a href="/customer"><i class="fa fa-tag" >&nbsp;</i>Association Profile </a>
+                  </li>
+                  <li class="disabled" ng-show="isAdmin()" >
+                    <a href="/customer"><i class="fa fa-tag" >&nbsp;</i>Association Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isAdmin()">
+                    <a href="/customer"><i  class="fa fa-tag">&nbsp;</i>Agency Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isAdmin()" >
+                    <a href="/customer"><i class="fa fa-tag" >&nbsp;</i>Agency Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isAdmin()" >
+                    <a href="/customer"><i  class="fa fa-tag">&nbsp;</i>Doctor Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isAdmin()" >
+                    <a href="/customer"><i class="fa fa-tag" >&nbsp;</i>Doctor Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isAdmin()" >
+                    <a href="/customer"><i  class="fa fa-tag">&nbsp;</i>Hotel Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isAdmin()" >
+                    <a href="/customer"><i class="fa fa-tag" >&nbsp;</i>Hotel Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isAdmin()" >
+                    <a href="/customer"><i  class="fa fa-tag">&nbsp;</i>Tooken Cases</a>
+                  </li>
+                  <li class="disabled" ng-show="isAdmin()" >
+                    <a href="/customer"><i  class="fa fa-tag">&nbsp;</i>View Cases</a>
+                  </li>
+                  <!--
+
+                Hotel navbar settings
+
+                   -->
+                  <li ng-show="isHotel()" ng-class="{active: isActive('/hotel')}">
+                    <a href="/hotel"><i class="fa fa-arrow-up">&nbsp;</i>Patient list</a>
+                  </li>
+                  <li ng-show="isHotel()" ng-class="{active: isActive('/alreadyin')}">
+                    <a href="/alreadyin"><i class="fa fa-arrow-down">&nbsp;</i>Patient already in charge</a>
+                  </li>
+                  <li ng-show="isHotel()" ng-class="{active: isActive('/settingsHotel')}">
+                    <a href="/settingsHotel"><i class="fa fa-arrow-down">&nbsp;</i>Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isHotel()" >
+                    <a href="/hotel"><i class="fa fa-tag" >&nbsp;</i>Association Profile </a>
+                  </li>
+                  <li class="disabled" ng-show="isHotel()" >
+                    <a href="/hotel"><i class="fa fa-tag" >&nbsp;</i>Association Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isHotel()">
+                    <a href="/hotel"><i  class="fa fa-tag">&nbsp;</i>Agency Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isHotel()" >
+                    <a href="/hotel"><i class="fa fa-tag" >&nbsp;</i>Agency Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isHotel()" >
+                    <a href="/hotel"><i  class="fa fa-tag">&nbsp;</i>Doctor Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isHotel()" >
+                    <a href="/hotel"><i class="fa fa-tag" >&nbsp;</i>Doctor Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isHotel()" >
+                    <a href="/hotel"><i  class="fa fa-tag">&nbsp;</i>Tooken Cases</a>
+                  </li>
+                  <li class="disabled" ng-show="isHotel()" >
+                    <a href="/hotel"><i  class="fa fa-tag">&nbsp;</i>View Cases</a>
+                  </li>
+                  <!--
+
+                           Agency navbar settings
+
+                   -->
+                  <li ng-show="isAgency()" ng-class="{active: isActive('/agency')}">
+                    <a href="/agency"><i class="fa fa-arrow-up">&nbsp;</i>Patient list</a>
+                  </li>
+                  <li ng-show="isAgency()" ng-class="{active: isActive('/alreadyin1')}">
+                    <a href="/alreadyin1"><i class="fa fa-arrow-down">&nbsp;</i>Patient already in charge</a>
+                  </li>
+                  <li ng-show="isAgency()" ng-class="{active: isActive('/settingsAgency')}">
+                    <a href="/settingsAgency"><i class="fa fa-arrow-down">&nbsp;</i>Agency Profile </a>
+                  </li>
+                  <li class="disabled" ng-show="isAgency()" >
+                    <a href="/agency"><i class="fa fa-tag" >&nbsp;</i>Association Profile </a>
+                  </li>
+                  <li class="disabled" ng-show="isAgency()" >
+                    <a href="/agency"><i class="fa fa-tag" >&nbsp;</i>Association Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isAgency()">
+                    <a href="/agency"><i  class="fa fa-tag">&nbsp;</i>Hotel Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isAgency()" >
+                    <a href="/agency"><i class="fa fa-tag" >&nbsp;</i>Hotel Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isAgency()" >
+                    <a href="/agency"><i  class="fa fa-tag">&nbsp;</i>Doctor Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isAgency()" >
+                    <a href="/agency"><i class="fa fa-tag" >&nbsp;</i>Doctor Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isAgency()" >
+                    <a href="/agency"><i  class="fa fa-tag">&nbsp;</i>Tooken Cases</a>
+                  </li>
+                  <li class="disabled" ng-show="isAgency()" >
+                    <a href="/agency"><i  class="fa fa-tag">&nbsp;</i>View Cases</a>
+                  </li>
+                  <!--
+
+                   Doctor navbar settings
+
+                  -->
+                  <li ng-show="isDoctor()" ng-class="{active: isActive('/tookencasesmanagement')}">
+                    <a href="/tookencasesmanagement"><i class="fa fa-tag">&nbsp;</i>Tooken Cases</a>
+                  </li>
+                  <li ng-show="isDoctor()" ng-class="{active: isActive('/SearchCases')}">
+                    <a href="/SearchCases"><i class="fa fa-tag">&nbsp;</i>View Cases</a>
+                  </li>
+                  <li class="disabled" ng-show="isDoctor()" >
+                    <a href="/tookencasesmanagement"><i class="fa fa-tag" >&nbsp;</i>Association Profile </a>
+                  </li>
+                  <li class="disabled" ng-show="isDoctor()" >
+                    <a href="/tookencasesmanagement"><i class="fa fa-tag" >&nbsp;</i>Association Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isDoctor()">
+                    <a href="/tookencasesmanagement"><i  class="fa fa-tag">&nbsp;</i>Hotel Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isDoctor()" >
+                    <a href="/tookencasesmanagement"><i class="fa fa-tag" >&nbsp;</i>Hotel Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isDoctor()" >
+                    <a href="/tookencasesmanagement"><i  class="fa fa-tag">&nbsp;</i>Agency Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isDoctor()" >
+                    <a href="/tookencasesmanagement"><i class="fa fa-tag" >&nbsp;</i>Agency Patient list </a>
+                  </li>
+
+                  <!--
+
+                  Association navbar settings
+
+                  -->
+                  <li ng-show="isAssociation()" ng-class="{active: isActive('/association')}">
+                    <a href="/association"><i class="fa fa-tag">&nbsp;</i>Patient List</a>
+                  </li>
+                  <li ng-show="isAssociation()" ng-class="{active: isActive('/trackpatient')}">
+                    <a href="/trackpatient"><i class="fa fa-tag">&nbsp;</i>Track Patients</a>
+                  </li>
+                  <li class="disabled" ng-show="isAssociation()" >
+                    <a href="/association"><i class="fa fa-tag" >&nbsp;</i>Agency Profile </a>
+                  </li>
+                  <li class="disabled" ng-show="isAssociation()" >
+                    <a href="/association"><i class="fa fa-tag" >&nbsp;</i>Agency Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isAssociation()">
+                    <a href="/association"><i  class="fa fa-tag">&nbsp;</i>Hotel Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isAssociation()" >
+                    <a href="/association"><i class="fa fa-tag" >&nbsp;</i>Hotel Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isAssociation()" >
+                    <a href="/association"><i  class="fa fa-tag">&nbsp;</i>Doctor Profile</a>
+                  </li>
+                  <li class="disabled" ng-show="isAssociation()" >
+                    <a href="/association"><i class="fa fa-tag" >&nbsp;</i>Doctor Patient list </a>
+                  </li>
+                  <li class="disabled" ng-show="isAssociation()" >
+                    <a href="/association"><i  class="fa fa-tag">&nbsp;</i>Tooken Cases</a>
+                  </li>
+                  <li class="disabled" ng-show="isAssociation()" >
+                    <a href="/association"><i  class="fa fa-tag">&nbsp;</i>View Cases</a>
+                  </li>
+
+
+
+                  <li class="divider"></li>
+                  <!-- <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}">
+                    <a href="/admin"><i class="fa fa-user">&nbsp;</i>Shop Settings</a>
+                  </li> -->
+                  <li ng-show="isAssociation()" ng-class="{active: isActive('/settings')}">
+                    <a href="/settings"><i class="fa fa-user">&nbsp;</i>Profil</a>
+                  </li>
+
+                  <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}">
+                    <a href="" ng-click="logout()"><i class="fa fa-sign-out">&nbsp;</i>Logout</a>
+                  </li>
+                  <li class="divider"></li>
+                  </ul>
+                </li>
+                <li><a href="/contact">Contact</a>
+                </li>
+                <li><a href="/documentation">Documentation</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="Login">Customer login</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="customer-orders.html" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email-modal" placeholder="email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password-modal" placeholder="password">
+                        </div>
+
+                        <p class="text-center">
+                            <button class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
+                        </p>
+
+                    </form>
+
+                    <p class="text-center text-muted">Not registered yet?</p>
+                    <p class="text-center text-muted"><a href="register.html"><strong>Register now</strong></a>! It is easy and done in 1&nbsp;minute and gives you access to special discounts and much more!</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- *** TOP BAR END *** -->
+
+<!-- *** NAVBAR ***
+_________________________________________________________ -->
+
+<div class="navbar navbar-default yamm" role="navigation" id="navbar">
+    <div class="container">
+  <div class="col-md-12">
+        <div class="navbar-header">
+
+
+            <a ng-show="isHotel()" class="navbar-brand home" href="/hotel" data-animate-hover="bounce">
+
+                <img src="assets/images/hotel.png" width="40px;"> HOME
+
+            </a>
+          <a ng-show="isAssociation()" class="navbar-brand home" href="/association" data-animate-hover="bounce">
+            <img src="/assets/img/logo.gif" alt="medical logo" class="hidden-xs">
+            <img src="/assets/img/logo.gif" alt="medical logo" class="visible-xs"><span class="sr-only">Tourisme Medical - go to homepage</span>
+          </a>
+          <a ng-show="isAgency()" class="navbar-brand home" href="/agency" data-animate-hover="bounce">
+            <img src="/assets/img/logo.gif" alt="medical logo" class="hidden-xs">
+            <img src="/assets/img/logo.gif" alt="medical logo" class="visible-xs"><span class="sr-only">Tourisme Medical - go to homepage</span>
+          </a>
+            <div class="navbar-buttons">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation" ng-click="isCollapsed1 = !isCollapsed1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-align-justify"></i>
+                </button>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
+                    <span class="sr-only">Toggle search</span>
+                    <i class="fa fa-search"></i>
+                </button>
+
+            </div>
+        </div>
+        <!--/.navbar-header -->
+
+        <div class="navbar-collapse collapse navbar-static-top megamenu" id="navigation">
+          <div collapse="isCollapsed1" class="navbar-collapse collapse" id="navbar-main2">
+            <ul class="nav navbar-nav navbar-left">
+                <li class="dropdown yamm-fw" ng-repeat= "p in doctors">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">{{p.name}} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="yamm-content">
+                                <div class="row">
+                                    <div class="col-sm-3" ng-repeat="c in p.sub_doctors">
+                                        <!-- <h5>All</h5> -->
+                                        <ul>
+                                            <li><a href="/Doctor/{{c.slug}}/{{c._id}}" ng-click="hideSubMenu();">{{c.name}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.yamm-content -->
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+          </div>
+        </div>
+        <!--/.nav-collapse -->
+
+        <div class="navbar-buttons">
+
+
+            <!--/.nav-collapse -->
+
+            <div class="navbar-collapse collapse right" id="search-not-mobile" >
+              <a class="btn navbar-btn btn-primary" href="/alreadyin" ng-show="isHotel()">
+                <span class="sr-only">Toggle search</span>
+                <i class="fa fa-user-md"></i> My patient List
+              </a>
+              <a class="btn navbar-btn btn-primary" href="/settingsHotel" ng-show="isHotel()" >
+                <span class="sr-only">Toggle search</span>
+                <i class="fa fa-home"></i> Profile Settings
+              </a>
+
+            </div>
+
+        </div>
+
+        <div class="collapse clearfix" id="search">
+          <form id="searchForm" class="ng-scope ng-pristine ng-valid navbar-form" role="search">
+            <div class="nav-search text-center" id="nav-search">
+              <span class="input-icon">
+                <script type="text/ng-template" id="searchTemplate.html">
+                    <a><span>{{match.model.name}}</span></a>
+                </script>
+                <div class="input-group">
+                <input class="form-control text-left" type="text" name="q" id="q" autocomplete="on"
+                placeholder="Search for a Patient..."
+                ng-model="search"
+                typeahead="p as p.name for p in globalSearch($viewValue)"
+                typeahead-loading="loadingLocations"
+                typeahead-no-results="noResults"
+                typeahead-template-url="searchTemplate.html"
+                typeahead-on-select="onSelectClinic($item, $model, $label)"
+                autofocus=""
+                >
+                <span class="input-group-btn">
+
+<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>Search</button>
+
+</span>
+              </div>
+            </span>
+          </form>
+
+            <!-- <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <span class="input-group-btn">
+
+  <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+
+    </span>
+                </div>
+            </form> -->
+
+        </div>
+        <!--/.nav-collapse -->
+
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /#navbar -->
+</div sty>
+<!-- *** NAVBAR END *** -->
+</div>
+</div>

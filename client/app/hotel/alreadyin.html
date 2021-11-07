@@ -1,0 +1,434 @@
+
+
+<div class="box">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1></h1>
+      <div class="table-responsive">
+        <div class="panel panel-primary">
+          <div class="panel-heading"><h1><i class="fa fa-hourglass" style="color: white; font-size: 50px;"></i> Waiting Arrivals</h1>
+
+            <div class="sw-search" >
+              <div class="nav-search" id="nav-search">
+
+              </div>
+            </div>
+
+            <!-- <span class="pull-right hidden-xs">
+              <div ng-hide="data.length>-1"><i class="fa fa-cog fa-3x fa-spin"></i>&nbsp;Loading</div>&nbsp;
+              <b>{{data.length}}</b> {{title}} found &nbsp;
+            </span> -->
+          </div>
+
+          <div class="panel-body">
+            <table class="table table-striped" ts-wrapper>
+              <thead>
+              <tr>
+                <th >
+                  Date in
+                </th>
+                <th >
+                  Name
+                </th>
+                <th >
+                  Age
+                </th>
+
+                <th >
+                  Added by
+                </th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <!-- <i class="fa fa-cog fa-spin fa-2x" ng-if="loadingTable"></i> -->
+              <tr ng-repeat="hotel in hotels.items" ng-show="hotel.hotel_id==bbb._id" ng-if="hotel.hosted!='1' && hotel.finished!='1'" >
+
+                <td >
+                  {{hotel.datetoken | date:'dd-MMM-yyyy'}}
+                </td>
+                <td >
+                  {{hotel.patient_name}}
+                </td>
+                <td>
+                  {{hotel.patient_age}}
+                </td>
+
+                <td>
+                  <A HREF="mailto:{{hotel.association_id}}">{{hotel.association_id}}</A>
+                </td>
+                <td>
+                  <div class="btn-group">
+                    <a class="btn btn-default btn-sm btn-default" data-toggle="modal"
+                       data-target="#patient-info{{hotel._id}}" > Details</a>
+                    <a class="btn btn-default btn-sm btn-success" data-toggle="modal"
+                       data-target="#patient-arrive{{hotel._id}}"   > Patient Arrived</a>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <div class="panel panel-primary">
+          <div class="panel-heading"><h1><i class="fa fa-home" style="color: white; font-size: 70px;"></i> Patient in host process</h1>
+
+            <div class="sw-search" >
+              <div class="nav-search" id="nav-search">
+
+              </div>
+            </div>
+
+            <!-- <span class="pull-right hidden-xs">
+              <div ng-hide="data.length>-1"><i class="fa fa-cog fa-3x fa-spin"></i>&nbsp;Loading</div>&nbsp;
+              <b>{{data.length}}</b> {{title}} found &nbsp;
+            </span> -->
+          </div>
+
+          <div class="panel-body">
+            <table class="table table-striped" ts-wrapper>
+              <thead>
+              <tr>
+                <th >
+                  Date in
+                </th> <th >
+                Date hosted
+              </th>
+                <th >
+                  Name
+                </th>
+                <th >
+                  Age
+                </th>
+
+                <th >
+                  Added by
+                </th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <!-- <i class="fa fa-cog fa-spin fa-2x" ng-if="loadingTable"></i> -->
+              <tr ng-repeat="hotel in hotels.items" ng-show="hotel.hotel_id==bbb._id" ng-if="hotel.hosted=='1' && hotel.finished!='1'"  >
+
+                <td >
+                  {{hotel.datetoken | date:'dd-MMM-yyyy HH:mm:ss'}}
+                </td>
+                <td >
+                  {{hotel.datehosted | date:'dd-MMM-yyyy HH:mm:ss'}}
+                </td>
+                <td >
+                  {{hotel.patient_name}}
+                </td>
+                <td>
+                  {{hotel.patient_age}}
+                </td>
+
+                <td>
+                  <A HREF="mailto:{{hotel.association_id}}">{{hotel.association_id}}</A>
+                </td>
+                <td>
+                  <div class="btn-group">
+                    <a class="btn btn-default btn-sm btn-default" data-toggle="modal"
+                       data-target="#patient-info{{hotel._id}}" > Details</a>
+                    <a class="btn btn-default btn-sm btn-warning" data-toggle="modal"
+                       data-target="#patient-hosted{{hotel._id}}"  > finished hosting</a>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+      <div class="table-responsive">
+        <div class="panel panel-primary">
+          <div class="panel-heading"><h1><i class="fa fa-list" style="color: white; font-size: 50px;"></i> All patient history</h1>
+
+            <div class="sw-search" >
+              <div class="nav-search" id="nav-search">
+
+              </div>
+            </div>
+
+            <!-- <span class="pull-right hidden-xs">
+              <div ng-hide="data.length>-1"><i class="fa fa-cog fa-3x fa-spin"></i>&nbsp;Loading</div>&nbsp;
+              <b>{{data.length}}</b> {{title}} found &nbsp;
+            </span> -->
+          </div>
+
+          <div class="panel-body">
+            <table class="table table-striped" ts-wrapper>
+              <thead>
+              <tr>
+                <th >
+                  Date in
+                </th>
+                <th >
+                  Date hosted
+                </th>
+                <th >
+                  Date OUT
+                </th>
+                <th >
+                  Name
+                </th>
+                <th >
+                  Age
+                </th>
+                <th >
+                  Status
+                </th>
+
+                <th >
+                  Added by
+                </th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <!-- <i class="fa fa-cog fa-spin fa-2x" ng-if="loadingTable"></i> -->
+              <tr ng-repeat="hotel in hotels.items" ng-sort="hotel.datetoken">
+
+                <td >
+                  {{hotel.datetoken | date:'dd-MMM-yyyy HH:mm:ss'}}
+                </td>
+                <td >
+                  <div ng-if="hotel.hosted=='1'">
+                    {{hotel.datehosted | date:'dd-MMM-yyyy HH:mm:ss'}}
+                  </div>
+                  <div ng-if="hotel.hosted!='1'">
+                    still not hosted
+                  </div>
+                </td>
+                <td >
+                  <div ng-if="hotel.finished=='1'">
+                    {{hotel.datefinished | date:'dd-MMM-yyyy HH:mm:ss'}}
+                  </div>
+                  <div ng-if="hotel.finished!='1'">
+                    Not yet
+                  </div>
+                </td>
+
+                <td >
+                  {{hotel.patient_name}}
+                </td>
+                <td>
+                  {{hotel.patient_age}}
+                </td>
+                <td>
+                  <div ng-if="hotel.finished=='1'">
+                    <center> <i class="fa fa-check-circle-o" style="color: green; font-size: 50px;"></i><br>Hosting complete </center>
+                  </div>
+                  <div ng-if="hotel.finished!='1' && hotel.hosted=='1'">
+                  <center><i class="fa fa-home" style="color: orange; font-size: 50px;"></i><br>
+                    In host process</center>
+                  </div>
+                  <div ng-if="hotel.finished!='1' && hotel.hosted!='1'">
+                   <center><i class="fa fa-hourglass" style="color: red; font-size: 50px;"></i><br>Waiting arrivals </center>
+                  </div>
+                </td>
+
+                <td>
+                  <A HREF="mailto:{{hotel.association_id}}">{{hotel.association_id}}</A>
+                </td>
+                <td>
+                  <div class="btn-group">
+                    <a class="btn btn-default btn-sm btn-default" data-toggle="modal"
+                       data-target="#patient-info{{hotel._id}}" > Details</a>
+
+                  </div>
+                </td>
+
+
+
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-repeat="hotel in hotels.items">
+<div class="modal" id="patient-info{{hotel._id}}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- more usage of angular data binding -->
+        <h2>{{activePatient.lastName}}</h2>
+      </div>
+      <div class="modal-body">
+        <center>
+        <div ng-if="hotel.critical">
+          <img src="assets/images/criticalcondition.png">
+        </div>
+        <div ng-if="!hotel.critical">
+          <img src="assets/images/noncriticalcondition.png">
+        </div>
+        </center>
+        <div >
+          <div class="" id="details" >
+
+            <div >
+              <div>
+                <h4 >Patient details</h4>
+                <li >Name:  {{hotel.patient_name}}</li>
+                <li >From: {{hotel.patient_from}}</li>
+                <li >Association: {{hotel.association_id}}</li>
+                <li >Date TOKEN: {{hotel.datetoken | date:'dd-MMM-yyyy HH:mm:ss'}}</li>
+              </div>
+
+
+            </div>
+            <blockquote>
+
+              <div class="">
+                <div ng-show="patient.in=='hotel' && patient.hosted!='1'">
+                  <div class=""  style="color: red;" ng-click="deleteH(patient);">
+                    <div class="btn1" style="color: red;">
+                      <span>Remove </span>
+                      <div class="dot"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div ng-show="(patient.in=='doctor' || patient.in=='agency') && patient.hosted!='1'">
+                  <div class="container" ng-click="deleteH(patient);">
+                    <div class="btn1">
+                      <span>add</span>
+                      <div class="dot"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </blockquote>
+
+            <hr>
+
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="modal" id="patient-arrive{{hotel._id}}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- more usage of angular data binding -->
+          <center><h3>{{hotel.patient_name}}</h3></center>
+        </div>
+        <div class="modal-body">
+          <center>
+
+            <h1>Confirm Arrivals ?</h1>
+          </center>
+          <div>
+
+
+            <br><br><br><br>
+
+
+            <div class="">
+              <div>
+                <center>
+                  <a data-dismiss="modal" aria-label="Close">
+                    <div class="btn btn-danger">
+                      Cancel
+                    </div>
+                  </a>
+                  <a data-dismiss="modal" aria-label="Close" ng-click="arrived(hotel);">
+                    <div class="btn btn-success">
+                      Confirm
+                    </div>
+                  </a>
+                </center>
+              </div>
+
+              <div>
+
+              </div>
+            </div>
+            </blockquote>
+
+            <hr>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="patient-hosted{{hotel._id}}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- more usage of angular data binding -->
+          <center><h3>{{hotel.patient_name}}</h3></center>
+        </div>
+        <div class="modal-body">
+          <center>
+
+            <h1>Confirm cmplete hosting process ?</h1>
+          </center>
+          <div>
+
+
+            <br><br><br><br>
+
+
+            <div class="">
+              <div>
+                <center>
+                  <a data-dismiss="modal" aria-label="Close">
+                    <div class="btn btn-danger">
+                      Cancel
+                    </div>
+                  </a>
+                  <a data-dismiss="modal" aria-label="Close" ng-click="finishedH(hotel);">
+                    <div class="btn btn-success">
+                      Confirm
+                    </div>
+                  </a>
+                </center>
+              </div>
+
+              <div>
+
+              </div>
+            </div>
+            </blockquote>
+
+            <hr>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

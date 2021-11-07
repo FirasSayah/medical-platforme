@@ -1,0 +1,160 @@
+<link rel="stylesheet" href="../../bower_components/angular-tablesort/mdb.css" />
+<link rel="stylesheet" href="../../bower_components/angular-tablesort/style.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+<div style="margin-left: 52%;margin-top: -4.5%;position: absolute">
+  <a href="/association">
+    <button class="btn btn-success">Patient list</button>
+  </a>
+  <a href="/trackpatient">
+    <button class="btn btn-success"> Track patient</button>
+  </a>
+
+  <a href="/settings">
+    <button class="btn btn-success">Profile</button>
+  </a>
+</div>
+<div class="container" style="margin-left: 15%">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="box">
+      <h3>Edit Profile</h3>
+      <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+
+        <div class="form-group">
+          <label>Current Password</label>
+
+          <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
+                 mongoose-error placeholder="Old password"/>
+          <p class="help-block" ng-show="form.password.$error.mongoose">
+              {{ errors.other }}
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label>New Password</label>
+
+          <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
+                 ng-minlength="3"
+                  placeholder="Set a new password"/>
+          <p class="help-block"
+             ng-show="(form.newPassword.$error.minlength ) && (form.newPassword.$dirty || submitted)">
+            Password must be at least 3 characters.
+          </p>
+        </div>
+        <div class="form-group"ng-show="isLoggedIn()" >
+          <label>New Name</label>
+          <input type="text" name="newName" class="form-control" ng-model="user.newName"
+                 ng-minlength="3"
+                 required placeholder="{{getCurrentUser().name}}"ng-value="getCurrentUser().name"/>
+          <p class="help-block"
+             ng-show="(form.newName.$error.minlength || form.newName.$error.required) && (form.newName.$dirty || submitted)">
+            Name must be at least 3 characters.
+          </p>
+        </div>
+
+
+        <div class="form-group"ng-show="isLoggedIn()" >
+          <label>New Phone</label>
+          <input type="text" name="newphone" class="form-control" ng-model="user.newphone"
+                 ng-minlength="8"
+                 required placeholder="{{getCurrentUser().phone}}"ng-value="getCurrentUser().phone"/>
+          <p class="help-block"
+             ng-show="(form.newphone.$error.minlength) && (form.newphone.$dirty || submitted)">
+            Name must be at least 8 characters.
+          </p>
+        </div>
+
+
+        <div class="form-group"ng-show="isLoggedIn()" >
+          <label>New address</label>
+          <input type="text" name="newaddress" class="form-control" ng-model="user.newaddress"
+                 ng-minlength="3"
+                 required placeholder="{{getCurrentUser().address}}"ng-value="getCurrentUser().address"/>
+          <p class="help-block"
+             ng-show="(form.newaddress.$error.minlength) && (form.newaddress.$dirty || submitted)">
+            Name must be at least 3 characters.
+          </p>
+        </div>
+
+
+        <div class="form-group"ng-show="isLoggedIn()" >
+          <label>New Speciality</label>
+          <input type="text" name="newspeciality" class="form-control" ng-model="user.newspeciality"
+                 ng-minlength="3"
+                 required placeholder="{{getCurrentUser().speciality}}"ng-value="getCurrentUser().speciality"/>
+          <p class="help-block"
+             ng-show="(form.newspeciality.$error.minlength) && (form.newspeciality.$dirty || submitted)">
+            Name must be at least 3 characters.
+          </p>
+        </div>
+
+
+        <div class="form-group"ng-show="isLoggedIn()" >
+          <label>New Capacity</label>
+          <input type="text" name="newcapacity" class="form-control" ng-model="user.newcapacity"
+                 ng-minlength="1"
+                 required placeholder="{{getCurrentUser().capacity}}"ng-value="getCurrentUser().capacity"/>
+          <p class="help-block"
+             ng-show="(form.newcapacity.$error.minlength) && (form.newcapacity.$dirty || submitted)">
+            Name must be at least 1 characters.
+          </p>
+        </div>
+
+
+
+        <div class="form-group"ng-show="isLoggedIn()" >
+          <label>New Location</label>
+          <input type="text" name="newlocation" class="form-control" ng-model="user.newlocation"
+                 ng-minlength="4"
+                 required placeholder="{{getCurrentUser().location}}"ng-value="getCurrentUser().location"/>
+          <p class="help-block"
+             ng-show="(form.newlocation.$error.minlength) && (form.newlocation.$dirty || submitted)">
+            Name must be at least 4 characters.
+          </p>
+        </div>
+
+
+
+          <div class="form-group" ng-class="{ 'has-success': form.neweMail.$valid && submitted,
+                                                  'has-error': form.neweMail.$invalid && submitted }"ng-show="isLoggedIn()" >
+            <label>Email</label>
+
+            <input type="email" name="neweMail" class="form-control" ng-model="user.neweMail"
+
+                   mongoose-error placeholder="{{getCurrentUser().email}}"ng-value="getCurrentUser().email"/>
+            <p class="help-block" ng-show="form.neweMail.$error.neweMail && submitted">
+              Doesn't look like a valid email.
+            </p>
+            <p class="help-block" ng-show="submitted">
+              What's your email address?
+            </p>
+            <p class="help-block" ng-show="form.neweMail.$error.mongoose">
+              {{ errors.neweMail }}
+            </p>
+
+        </div>
+
+
+
+        <div class="notifies" notifybar></div>
+
+
+
+
+
+
+
+
+
+        <p class="help-block"> {{ message }} </p>
+        <table>
+        <button ng-click="eventTrigger($event)" data-type="success" data-title=" {{ message }} " data-content="Profile updated"class="btn btn-lg btn-primary" type="submit">Save changes</button>
+        </table>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+</div>

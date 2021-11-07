@@ -1,0 +1,72 @@
+<div ng-if="patient.critical">
+  <img src="assets/images/criticalcondition.png">
+</div>
+<div ng-if="!patient.critical">
+  <img src="assets/images/noncriticalcondition.png">
+</div>
+<div style="margin-top: -30%;">
+  <div class="" id="details" >
+
+    <div style="margin-left: 10%;">
+      <div ng-if="patient.info!=0">
+        <h4 style="color:white;">Patient details</h4>
+        <li style="color:white;margin-left: 30px;">Last Name:  {{patient.lastName}}</li>
+        <li style="color:white;margin-left: 30px;">First name:  {{patient.firstName}}</li>
+        <li style="color:white;margin-left: 30px;">Cin:  {{patient.cin}}</li>
+        <li style="color:white;margin-left: 30px;">HomeTreatment: {{patient.HomeTreatment}}</li>
+        <li style="color:white;margin-left: 30px;">Age: {{patient.age}}</li>
+        <li style="color:white;margin-left: 30px;">Gender: {{patient.gender}}</li>
+      </div>
+
+
+      <br><br>
+
+      <div>
+
+        <ul>
+          <li style="color:white;"> Patient country : {{patient.from}}</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:white;">Desired country</h4>
+        <ul>
+          <li style="color:white;">{{patient.to}}</li>
+        </ul>
+      </div>
+    </div>
+    <blockquote>
+
+      <div class="">
+        <div ng-show="patient.in=='hotel' && patient.hosted!='1'">
+          <div class=""  style="color: red;" ng-click="deleteH(patient);">
+            <div class="btn1" style="color: red;">
+              <span>Remove </span>
+              <div class="dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div ng-show="(patient.in=='doctor' || patient.in=='agency') && patient.hosted!='1'">
+          <div class="container" ng-click="deleteH(patient);">
+            <div class="btn1">
+              <span>add</span>
+              <div class="dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </blockquote>
+
+    <hr>
+
+
+    <div class="social">
+
+      <center><a  href="../alreadyin" class="btn btn-success">back to Already in</a></center>
+    </div>
+  </div>
+</div>
+
+
+
+

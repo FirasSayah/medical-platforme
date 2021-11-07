@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="bower_components/angular-loading/angular-loading.css" />
+
+<div class="col-md-18" style="background: rgba(255,0,0,0.0)">
+  <div class="box info-bar" >
+    <div class="row">
+      <div >
+        Patients that may interest you
+        <a ng-if="aa.departureDate" ng-click="patienttoshow()" style="margin-left: 750px" href="#date" class="btn btn-facebook" >All</a>
+        <a ng-if="aa.departureDate" ng-click="patienttoshow(aa.departureDate)" class="btn btn-facebook" >{{aa.departureDate}}</a>
+        <a ng-if="aa.departureDate2" ng-click="patienttoshow(aa.departureDate2)" href="#date2" class="btn btn-facebook" > {{aa.departureDate2}}</a>
+        <a ng-if="aa.departureDate3" ng-click="patienttoshow(aa.departureDate3)" href="#date3" class="btn btn-facebook" > {{aa.departureDate3}}</a>
+
+      </div>
+    </div>
+  </div>
+  <div infinite-scroll='scroll()' infinite-scroll-disabled='patients.busy' infinite-scroll-distance='1' >
+    <div class="row patients" dw-loading="patients" dw-loading-options="{text: ''}">
+      <div class="box" ng-if="patients.items.length==0">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3>No Patient found.</h3>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-3 col-sm-8" ng-repeat="patient in patients.items" style=" height: 50%;" ng-show="(patient.in=='doctor' ) && (patient.departure_date==datetoshow)" ng-if="(isAgency())">
+
+        <div class="container">
+          <div class="row profile">
+            <div class="col-md-3">
+              <div class="profile-sidebar">
+                <!-- SIDEBAR USERPIC -->
+                <div class="profile-userpic">
+                  <center><img src="https://www.medigo.com/blog/app/uploads/2015/06/MEDIGO-medical-travel-made-simple-610x406.jpg" alt=""></center>
+                </div>
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                  <div class="profile-usertitle-name">
+                    <a style="color:  #0D47A1" ui-sref="patientDetail1({id:patient._id, slug:patient.slug})" >{{patient.firstName}} {{patient.lastName}}</a>
+                  </div>
+                  <div class="profile-usertitle-job">
+
+                  </div>
+                </div>
+                <!-- END SIDEBAR USER TITLE -->
+                <!-- SIDEBAR BUTTONS -->
+                <div   ng-show="isAgency()" class="profile-userbuttons">
+
+                  <a ui-sref="patientDetail1({id:patient._id, slug:patient.slug})" class="btn btn-success btn-sm">View detail</a>
+                  </br></br>
+
+                  <div  ng-show="isAgency()" >
+                    <a  class="btn btn-danger btn-sm" ng-click="createAgency(patient);">
+
+                      <div class="btn btn-danger btn-sm" >
+                        Added to my list
+                      </div></a>
+                  </div>
+
+                </div>
+                <!-- END SIDEBAR BUTTONS -->
+                <!-- SIDEBAR MENU -->
+                <div class="profile-usermenu">
+                  <ul class="nav">
+                    <li class="active">
+                      <a href="">
+                        <i class="glyphicon glyphicon-home"></i>
+                        {{patient.from}}
+                       </a>
+                    </li>
+                    <li class="active">
+                      <a href="">
+                        <i class="glyphicon glyphicon-flag"></i>
+                        {{patient.to}} </a>
+                    </li>
+                    <li class="active">
+                      <a href="">
+                        <i class="glyphicon glyphicon-user"></i>
+                        {{patient.age}} </a>
+                    </li>
+                    <li class="active">
+                      <a href="" target="_blank">
+                        <div ng-if="patient.critical==false">
+                          <i class="glyphicon glyphicon-off"; style="color: green"></i>
+                         Not Critical condition
+                        </div>
+                        <div ng-if="patient.critical">
+
+                          <i class="glyphicon glyphicon-ok"; style="color: red"></i>
+                          Critical condition
+                        </div></a>
+                    </li>
+
+                  </ul>
+                </div>
+                <!-- END MENU -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <br>
+        <br>
+      </div>
+
+
+
+
+
+      <!-- /.col-md-4 -->
+    </div>
+    <!-- /.patients -->
+
+  </div>
+  <!-- /.col-md-9 -->
+</div> <!-- /just to enable infinite scroll -->

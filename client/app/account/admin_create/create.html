@@ -1,0 +1,223 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+<style>
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+    margin-left: 15%;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .input-field input[type=date]:focus + label,
+  .input-field input[type=text]:focus + label,
+  .input-field input[type=email]:focus + label,
+  .input-field input[type=password]:focus + label {
+    color: #e91e63;
+  }
+
+  .input-field input[type=date]:focus,
+  .input-field input[type=text]:focus,
+  .input-field input[type=email]:focus,
+  .input-field input[type=password]:focus {
+    border-bottom: 2px solid #e91e63;
+    box-shadow: none;
+  }
+</style>
+<div class="section"></div>
+<main>
+  <center>
+    <img class="responsive-img" src="../../../assets/img/logo.gif" />
+    <div class="section"></div>
+
+    <h5 class="indigo-text">Create the kind of account you need</h5>
+    <div class="section"></div>
+
+    <div class="container">
+      <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;width: 40%">
+
+        <form class="col s20" ng-submit="register(form)" name="form" novalidate style="margin-left: 8%">
+          <div class='row'>
+            <div class='col s12'>
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class='input-field col s12' ng-class="{ 'has-success': form.name.$valid && submitted,
+                                                  'has-error': form.name.$invalid && submitted }">
+              <input class='validate' type='text' name='name'  required placeholder="Your name"id='name'ng-model="user.name" />
+              <label for='name'>Name</label>
+              <p class="help-block" ng-show="form.name.$error.required && submitted">
+                A name is required
+              </p>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='input-field col s12' ng-class="{ 'has-success': form.email.$valid && submitted,
+                                                  'has-error': form.email.$invalid && submitted }">
+              <input class='validate' type='email' name='email' id='email'ng-model="user.email" required
+                     mongoose-error placeholder="Email ID"/>
+              <label for='email'>Enter your email</label>
+              <p class="help-block" ng-show="form.email.$error.email && submitted">
+                Doesn't look like a valid email.
+              </p>
+              <p class="help-block" ng-show="form.email.$error.required && submitted">
+                What's your email address?
+              </p>
+              <p class="help-block" ng-show="form.email.$error.mongoose">
+                {{ errors.email }}
+              </p>
+            </div>
+          </div>
+
+
+          <div class='row'>
+            <div class='input-field col s12' ng-class="{ 'has-success': form.phone.$valid && submitted,
+                                                  'has-error': form.phone.$invalid && submitted }">
+              <input class='validate' type='text' name='phone'  required placeholder="Your phone"id='phone'ng-model="user.phone" />
+              <label for='phone'>Phone</label>
+              <p class="help-block" ng-show="form.phone.$error.required && submitted">
+                A phone is required
+              </p>
+            </div>
+          </div>
+
+
+          <div class='row'>
+            <div class='input-field col s12' ng-class="{ 'has-success': form.address.$valid && submitted,
+                                                  'has-error': form.address.$invalid && submitted }">
+              <input class='validate' type='text' name='address'  required placeholder="Your address"id='address'ng-model="user.address" />
+              <label for='address'>Address</label>
+              <p class="help-block" ng-show="form.address.$error.required && submitted">
+                An address is required
+              </p>
+            </div>
+          </div>
+
+
+          <div class='row'>
+            <div class='input-field col s12' ng-class="{ 'has-success': form.speciality.$valid && submitted,
+                                                  'has-error': form.speciality.$invalid && submitted }">
+              <input class='validate' type='text' name='speciality'  required placeholder="Your speciality"id='speciality'ng-model="user.speciality" />
+              <label for='name'>Speciality</label>
+              <p class="help-block" ng-show="form.speciality.$error.required && submitted">
+                A speciality is required
+              </p>
+            </div>
+          </div>
+
+
+          <div class='row'>
+            <div class='input-field col s12' ng-class="{ 'has-success': form.capacity.$valid && submitted,
+                                                  'has-error': form.capacity.$invalid && submitted }">
+              <input class='validate' type='text' name='capacity'  required placeholder="Your capacity"id='capacity'ng-model="user.capacity" />
+              <label for='capacity'>Capacity</label>
+              <p class="help-block" ng-show="form.capacity.$error.required && submitted">
+                A capacity is required
+              </p>
+            </div>
+          </div>
+
+
+
+          <div class='row'>
+            <div class='input-field col s12' ng-class="{ 'has-success': form.localion.$valid && submitted,
+                                                  'has-error': form.location.$invalid && submitted }">
+              <input class='validate' type='text' name='localion'  required placeholder="Your location"id='location'ng-model="user.location" />
+              <label for='location'>Localtion</label>
+              <p class="help-block" ng-show="form.localion.$error.required && submitted">
+                A location is required
+              </p>
+            </div>
+          </div>
+
+
+
+          <div class='row'>
+            <div class='input-field col s12'ng-class="{ 'has-success': form.password.$valid && submitted,
+                                                  'has-error': form.password.$invalid && submitted }">
+              <input class='validate' type='password' name='password' id='password' ng-model="user.password" ng-minlength="3"
+                     required
+                     mongoose-error placeholder="Password"/>
+              <label for='password'>Enter your password</label>
+              <p class="help-block"
+                 ng-show="(form.password.$error.minlength || form.password.$error.required) && submitted">
+                Password must be at least 3 characters.
+              </p>
+              <p class="help-block" ng-show="form.password.$error.mongoose">
+                {{ errors.password }}
+              </p>
+            </div>
+          </div>
+          <div class="row" >
+            <div ng-class="{ 'has-success': form.role.$valid && submitted,
+                                                  'has-error': form.role.$invalid && submitted }">
+            <p>
+              <input name="group1" type="radio" id="test1"ng-model="user.role" checked="checked" value="association" required/>
+              <label for="test1">Association</label>
+            </p>
+
+            <p>
+              <input name="role" type="radio" id="test2"ng-model="user.role" value="doctor" />
+              <label for="test2">Doctor</label>
+            </p>
+
+            <p>
+              <input name="role" type="radio" id="test3" ng-model="user.role"value="agency"/>
+              <label for="test3">Travel Company</label>
+            </p>
+              <p>
+                <input name="role" type="radio" id="test4" ng-model="user.role"value="hotel"/>
+                <label for="test4">Hotel</label>
+              </p>
+
+              <p class="help-block" ng-show="form.role.$error.required && submitted">
+                A role is required
+              </p>
+          </div>
+
+          <br />
+          <center>
+            <div class='row'>
+              <button type='submit' name='btn_login' ng-disabled="form.$dirty && form.$invalid" class='col s12 btn btn-large waves-effect indigo'>Create</button>
+            </div>
+          </center>
+        </form>
+      </div>
+    </div>
+  </center>
+
+  <div class="section"></div>
+  <div class="section"></div>
+</main>
+
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

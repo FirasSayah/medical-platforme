@@ -1,0 +1,109 @@
+
+<h1 style="display: none">{{getCurrentUser._id}}</h1>
+<div class="box">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <div class="panel panel-primary">
+          <div class="panel-heading">List of tooken cases
+
+            <div class="sw-search" >
+              <div class="nav-search" id="nav-search">
+                          <span class="input-icon">
+                              <input placeholder="Filter list ..." class="nav-search-input" ng-model="search" autocomplete="off" type="text" style="width:300px;" autofocus>
+                              <i class="search-icon fa fa-search nav-search-icon"></i>
+                          </span>
+              </div>
+            </div>
+
+
+
+          <div class="panel-body">
+            <table class="table table-striped" ts-wrapper>
+              <thead>
+              <tr>
+                <th>Patient name</th>
+                <th>Patient Disease</th>
+                <th>Patient City</th>
+                <th>Remove </th>
+                <th>State of case </th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <tr ng-repeat="case in cases | filter:search">
+                <td><h6 style="color: black">{{case.lastName}}</h6></td>
+                <td><h6 style="color: black">{{case.reasonForHospitalisation}}</h6></td>
+                <td><h6 style="color: black">{{case.from}}</h6></td>
+                <td>
+
+                    <button type="button" class="btn btn-danger" ng-click="deleteCase(getCurrentUser._id, case._id)">Delete case</button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger" ng-if="case.critical == false" ng-click="makeCritical(getCurrentUser._id, case._id)">Critical</button>
+                  <button type="button" class="btn btn-success" ng-if="case.critical == true" ng-click="makeCritical(getCurrentUser._id, case._id)">Not Critical</button>
+                </td>
+                <td><button class="btn btn-primary pull-right"
+                             data-toggle="modal"
+                             data-target="#patient-info"
+                             ng-click="changeActivePatient(case)">More Details</button></td>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+    <div class="modal" id="patient-info">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- more usage of angular data binding -->
+            <h2>{{activePatient.lastName}}</h2>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-8 col-xs-offset-2">
+                <!-- ng-src used again instead of src -->
+                <img ng-src="assets/img/associamed.jpg" class="img-rounded img-responsive">
+              </div>
+            </div>
+            <div class="row top-buffer">
+              <div class="col-md-6">
+                <!-- angular data binding -->
+                <p><strong>first Name: </strong>{{activePatient.firstName}}</p>
+                <p><strong>age: </strong>{{activePatient.age}}</p>
+                <p><strong>gender: </strong>{{activePatient.gender}}</p>
+                <p><strong>reason For Hospitalisation: </strong>{{activePatient.reasonForHospitalisation}}</p>
+                <p><strong>way of Life: </strong>{{activePatient.wayOfLife}}</p>
+                <p><strong>reason For Hospitalisation: </strong>{{activePatient.reasonForHospitalisation}}</p>
+                <p><strong>Antecedents Family: </strong>{{activePatient.AntecedentsFamily}}</p>
+                <p><strong>Home Treatment: </strong>{{activePatient.HomeTreatment}}</p>
+                <p><strong>physical Examination: </strong>{{activePatient.physicalExamination}}</p>
+                <p><strong>Para Clinical Review </strong>{{activePatient.ParaClinicalReview}}</p>
+                <label for="comment">Conclusion:</label>
+                <textarea class="form-control" rows="5" id="comment" ng-model="activePatient.conclusion"></textarea>
+                <div class="col-xs-6">
+                  <label>Departure Date: </label>
+                  <input class="form-control" ng-model="activePatient.departure_date" type="text">
+                </div>
+              </div>
+              <div class="col-xs-12 top-buffer">
+                <!-- angular data binding and data-dismiss for bootstrap -->
+                <button class="btn btn-primary pull-right"
+                        data-dismiss="modal" ng-click="PatientAddInformation(activePatient._id,activePatient.conclusion,activePatient.departure_date)">Save</button>&nbsp;&nbsp;
+                <button class="btn btn-danger pull-right"
+                        data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+

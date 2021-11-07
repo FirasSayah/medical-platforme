@@ -1,0 +1,115 @@
+<div growl></div>
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <ol class="breadcrumb">
+        <li><a ui-sref="SearchCases" href="">Home</a></li>
+        <li ng-repeat="b in breadcrumb.items | reverse">
+          <a href="/" ng-if="!$last">{{b.name}}</a>
+          <span ng-if="$last">{{b.name}}</span>
+        </li>
+      </ol>
+    </div>
+    <hr class="clearfix"/>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-12">
+      <div class="row" id="patientain">
+        <div class="col-sm-6">
+          <div id="mainImage">
+            <img src="assets/img/associamed.jpg">
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="box">
+            <h1 class="text-center">{{patient.lastName}} {{patient.firstName}}</h1>
+            <h1 class="text-center">This case is added by Associamed</h1>
+            <p class="goToDescription"><a href="#details" class="scroll-to">Scroll for more details</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="box" id="details">
+        <p>
+          <div>
+            <h3>Patient details</h3>
+        <p>{{patient.Cinematography}}</p>
+      </div>
+
+      <div>
+        <h4>Gender</h4>
+        <ul>
+          <li>{{patient.gender}}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Age</h4>
+        <ul>
+          <li>{{patient.age}}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Disease</h4>
+        <ul>
+          <li>{{patient.reasonForHospitalisation}}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Location</h4>
+        <ul>
+          <li>{{patient.from}}</li>
+        </ul>
+      </div>
+       <div>
+         <h4>way Of Life</h4>
+         <ul>
+           <li>{{patient.wayOfLife}}</li>
+         </ul>
+       </div>
+      <div>
+        <h4>history Of The Disease</h4>
+        <ul>
+          <li>{{patient.historyOfTheDisease}}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>physical Examination</h4>
+        <ul>
+          <li>{{patient.physicalExamination}}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>ParaClinical Review</h4>
+        <ul>
+          <li>{{patient.ParaClinicalReview}}</li>
+        </ul>
+      </div>
+      <div growl></div>
+      <br>
+        <!--<a href="/SearchCases">--><button type="button" class="btn btn-success" ng-disabled="isDisabled" ng-click="takeCase(getCurrentUser()._id,patient._id)">Take this Case<i class="fa fa-plus"></i> </button>&nbsp;&nbsp;<!--/a>-->
+            <a ui-sref="SearchCases" href="" class="btn btn-success" > Go back to list</a>
+      <hr>
+      <div class="social">
+        <h4>Show it to your friends<!--{{getCurrentUser()._id }} {{patient._id}}--></h4>
+        <p>
+          <a href="https://www.facebook.com/" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
+          <a href="#" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
+          <a href="https://twitter.com/" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
+          <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+
+
+<div class="box">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1></h1>
+      <div class="table-responsive">
+        <div class="panel panel-primary">
+          <div class="panel-heading">List of Patient in charges
+
+            <div class="sw-search" >
+              <div class="nav-search" id="nav-search">
+
+              </div>
+            </div>
+
+            <!-- <span class="pull-right hidden-xs">
+              <div ng-hide="data.length>-1"><i class="fa fa-cog fa-3x fa-spin"></i>&nbsp;Loading</div>&nbsp;
+              <b>{{data.length}}</b> {{title}} found &nbsp;
+            </span> -->
+          </div>
+
+          <div class="panel-body">
+            <table class="table table-striped" ts-wrapper>
+              <thead>
+              <tr>
+                <th >
+                  Name
+                </th>
+                <th >
+                  Critical
+                </th>
+                <th >
+                  Age
+                </th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <!-- <i class="fa fa-cog fa-spin fa-2x" ng-if="loadingTable"></i> -->
+              <tr ng-repeat="agency in agencys.items"  ng-show="agency.agency_id==bbb._id" >
+                <td >
+                  {{agency.patient_name}}
+                </td>
+                <td >
+                  {{agency.parent_critical}}
+                </td>
+                <td>
+                {{agency.patient_age}}
+              </td>
+                <td>
+                  <div class="btn-group">
+                    <a class="btn btn-default btn-sm btn-default" ui-sref="patientDetails1({id:agency.patient_id, slug:patient.slug})" > Details</a>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

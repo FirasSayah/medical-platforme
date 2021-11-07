@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="../../bower_components/angular-tablesort/mdb.css" />
+<link rel="stylesheet" href="../../bower_components/angular-tablesort/style.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+
+
+      <div class="table-responsive">
+      <div class="panel panel-primary">
+        <div class="panel-heading">List of Patients : {{title}}
+
+            <div class="sw-search"style="background-color: transparent" >
+                  <div class="nav-search" id="nav-search">
+                          <span class="input-icon">
+                              <input placeholder="Filter list ..." class="nav-search-input" ng-model="filter" autocomplete="off" type="text" style="width:300px;" autofocus>
+                              <i class="search-icon fa fa-search nav-search-icon"></i>
+                          </span>
+                  </div>
+              </div>
+
+              <!-- <span class="pull-right hidden-xs">
+                <div ng-hide="data.length>-1"><i class="fa fa-cog fa-3x fa-spin"></i>&nbsp;Loading</div>&nbsp;
+                <b>{{data.length}}</b> {{title}} found &nbsp;
+              </span> -->
+          </div>
+          <div class="panel-footer" style="background-color: transparent">
+            <div class="row" style="background-color: transparent">
+              <div class="col-xs-12" dw-loading="crudTable" dw-loading-options="{text: ''}">
+                <button type="button" class="btn btn-danger" ng-click="edit({});" ng-if="!noadd">Add New <i class="fa fa-plus"></i> </button>
+              </div>
+            </div>
+          </div>
+        <div class="panel-body" style="background-color: transparent">
+           <table class="table table-striped" ts-wrapper>
+          <thead>
+              <tr>
+                <th>#</th>
+                <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}">
+                  {{c.heading | labelCase}}
+                </th>
+                <th>Edit / Remove</th>
+              </tr>
+          </thead>
+          <tbody>
+            <!-- <i class="fa fa-cog fa-spin fa-2x" ng-if="loadingTable"></i> -->
+              <tr ng-repeat="p in data.slice().reverse() | filter:filter track by p._id" id="{{p._id}}" ts-repeat>
+                  <td>{{$index+1}}</td>
+                  <td ng-repeat="c in cols" ng-switch="c.dataType">
+                      <span ng-switch-when="boolean">
+                        <button class="btn" ng-class="{true:'btn-success', false:''}[p[c.heading]]" ng-click="changeActive(p);">{{p.active | active}}A</button>
+                      </span>
+
+
+
+                      <span ng-switch-default>
+                        {{p[c.heading]}}
+                      </span>
+                  </td>
+                  <td>
+                      <div>
+
+                        <a class="teal-text" ng-click="edit(p);" ng-if="!noedit"><i  class="fa fa-pencil"></i></a>
+                        <a  class="red-text" ng-confirm-message="Are you sure to delete?" ng-confirm-click="delete(p)" item="p" ng-if="!nodelete"><i class="fa fa-times"></i></a>
+                      </div>
+                  </td>
+              </tr>
+          </tbody>
+          </table>
+      </div>
+      </div>
+      </div>
+
+
+

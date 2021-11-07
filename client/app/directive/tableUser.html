@@ -1,0 +1,152 @@
+<link rel="stylesheet" href="../../bower_components/angular-tablesort/mdb.css" />
+<link rel="stylesheet" href="../../bower_components/angular-tablesort/style.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+
+
+
+
+
+<div style="margin-left: 70%;margin-top: -6%;position: absolute">
+  <a href="/association">
+    <button class="btn btn-success">Patient list</button>
+  </a>
+<notification-icon ng-init="0" count="notifiction" clear-trigger="clicked" >
+  <a href="/trackpatient">
+    <button class="btn btn-success"> Track patient</button>
+  </a>
+</notification-icon>
+
+  <a href="/settings">
+  <button class="btn btn-success">Profile</button>
+  </a>
+</div>
+
+
+
+
+<div class="table table-hover"style="width: 120%">
+  <div class="panel panel-primary">
+
+    <div class="panel-heading">List of Patients : {{title}}
+
+      <div class="sw-search"style="background-color: transparent" >
+        <div class="nav-search" id="nav-search">
+                          <span class="input-icon">
+                              <input placeholder="Filter list ..." class="nav-search-input" ng-model="filter" autocomplete="off" type="text" style="width:300px;" autofocus>
+                              <i class="search-icon fa fa-search nav-search-icon"></i>
+                          </span>
+        </div>
+      </div>
+
+      <!-- <span class="pull-right hidden-xs">
+        <div ng-hide="data.length>-1"><i class="fa fa-cog fa-3x fa-spin"></i>&nbsp;Loading</div>&nbsp;
+        <b>{{data.length}}</b> {{title}} found &nbsp;
+      </span> -->
+    </div>
+    <div class="panel-footer" style="background-color: transparent">
+      <div class="row" style="background-color: transparent">
+        <div class="col-xs-12" dw-loading="crudTable" dw-loading-options="{text: ''}">
+          <button type="button" class="btn btn-danger" ng-click="edit({});" ng-if="!noadd">Add New <i class="fa fa-plus"></i> </button>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body" style="background-color: transparent">
+      <table class="table table-striped" ts-wrapper>
+        <thead>
+        <tr>
+          <th>#</th>
+          <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}">
+            {{c.heading | labelCase}}
+          </th>
+          <th>Edit/Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- <i class="fa fa-cog fa-spin fa-2x" ng-if="loadingTable"></i> -->
+        <tr ng-repeat="p in data.slice().reverse() | filter:filter track by p._id" id="{{p._id}}" ts-repeat>
+
+          <td>{{$index+1}}</td>
+         <!-- <img ng-show="notifiction ==1" style=" position: absolute;width:2%;height: 5%;margin-top: -14.5%;margin-left: 86%" class="responsive-img" src="/assets/img/1.png" />
+          <img ng-show="notifiction ==2" style=" position: absolute;width:2%;height: 5%;margin-top: -14.5%;margin-left: 86%" class="responsive-img" src="/assets/img/2.png" />
+          <img ng-show="notifiction ==3" style=" position: absolute;width:2%;height: 5%;margin-top: -14.5%;margin-left: 86%" class="responsive-img" src="/assets/img/3.png" />
+          <img ng-show="notifiction ==4" style=" position: absolute;width:2%;height: 5%;margin-top: -14.5%;margin-left: 86%" class="responsive-img" src="/assets/img/4.png" />
+          <img ng-show="notifiction ==5" style=" position: absolute;width:2%;height: 5%;margin-top: -14.5%;margin-left: 86%" class="responsive-img" src="/assets/img/5.png" />
+          <img ng-show="notifiction >5" style=" position: absolute;width:2%;height: 5%;margin-top: -14.5%;margin-left: 86%" class="responsive-img" src="/assets/img/6.png" />
+-->
+          <td ng-repeat="c in cols" ng-switch="c.dataType">
+
+            <span ng-switch-when="boolean"ng-if="(p.in=='association')">
+                        <button class="btn" ng-class="{true:'btn-danger', false:''}[p[c.heading]]" ng-click="changeActive(p);">{{p.active | active}}</button>
+                      </span>
+            <span ng-switch-when="boolean"ng-if="(p.in=='doctor')">
+                        <button class="btn" ng-class="{false:'btn-danger', false:''}[p[c.heading]]" >{{!p.active | active}}</button>
+
+                      </span>
+            <span ng-switch-when="boolean"ng-if="(p.in=='hotel')">
+                        <button class="btn" ng-class="{false:'btn-danger', false:''}[p[c.heading]]" >{{!p.active | active}}</button>
+
+                      </span>
+            <span ng-switch-when="boolean"ng-if="(p.in=='agency')">
+                        <button class="btn" ng-class="{false:'btn-danger', false:''}[p[c.heading]]" >{{!p.active | active}}</button>
+
+                      </span>
+            <span ng-switch-default>
+                        {{p[c.heading]}}
+                      </span>
+
+          </td>
+          <td>
+            <div>
+              <a class="teal-text" ng-click="changeActivePatient(p);" data-toggle="modal" data-target="#patient-info"><i  class="fa fa-info-circle" aria-hidden="true"></i></a>
+              <a class="teal-text" ng-click="edit(p);" ng-if="!noedit"><i  class="fa fa-pencil"></i></a>
+              <a  class="red-text" ng-confirm-message="Are you sure to delete?" ng-confirm-click="delete(p)" item="p" ng-if="!nodelete"><i class="fa fa-times"></i></a>
+            </div>
+          </td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal fade" role="dialog" id="patient-info">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- more usage of angular data binding -->
+          <h2>{{activePatient.lastName}}</h2>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+              <!-- ng-src used again instead of src -->
+              <img ng-src="assets/img/patient.png" class="img-rounded img-responsive">
+
+            </div>
+          </div>
+          <div class="row top-buffer">
+            <div class="col-md-6">
+              <!-- angular data binding -->
+              <p><strong>first Name: </strong>{{activePatient.firstName}}</p>
+              <p><strong>age: </strong>{{activePatient.age}}</p>
+              <p><strong>gender: </strong>{{activePatient.gender}}</p>
+              <p><strong>reason For Hospitalisation: </strong>{{activePatient.reasonForHospitalisation}}</p>
+              <p><strong>way of Life: </strong>{{activePatient.wayOfLife}}</p>
+              <p><strong>reason For Hospitalisation: </strong>{{activePatient.reasonForHospitalisation}}</p>
+              <p><strong>Antecedents Family: </strong>{{activePatient.AntecedentsFamily}}</p>
+              <p><strong>Home Treatment: </strong>{{activePatient.HomeTreatment}}</p>
+              <p><strong>physical Examination: </strong>{{activePatient.physicalExamination}}</p>
+              <p><strong>Para Clinical Review </strong>{{activePatient.ParaClinicalReview}}</p>
+            </div>
+            <div class="col-xs-12 top-buffer">
+              <!-- angular data binding and data-dismiss for bootstrap -->
+              <button class="btn btn-danger pull-right"
+                      data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,88 @@
+.directive('crudTable1',['Modal', '$rootScope','User', 'Auth','$injector','$loading','socket','toastr','$cookieStore', function (Modal,$rootScope,User,Auth,$injector,$loading,socket,toastr,$cookieStore) {
+  return {
+    templateUrl: 'app/directive/tableUser.html',
+    restrict: 'EA',
+    scope: {obj:'='},
+    link: function (scope, element, attrs) {
+      // var cols = ['name','info','parent','image'];
+      scope.title = attrs.api+'s';
+      var cols = JSON.parse(attrs.cols);
+      var obj = [];
+      scope.noedit = attrs.noedit;
+      scope.nodelete = attrs.nodelete;
+      scope.noadd = attrs.noadd;
+      $rootScope.Users = User.query({active:true});
+      $rootScope.isLoggedIn = Auth.isLoggedIn;
+      scope.getCurrentUser = Auth.getCurrentUser;
+      var currentUser = {};
+      if($cookieStore.get('token')) {
+        currentUser = User.get();
+      }
+
+      // console.log();
+      // scope.disabledColumn = attrs.disabledcolumn;
+      angular.forEach(cols, function(o) {
+        // var k,v;
+        angular.forEach(o, function(v, k) {
+          var v1;
+          if(v==='number' || v==='float' || v==='integer' || v==='currency'){ v1 = 'parseFloat';}
+          else{ v1 = 'lowercase';}
+          obj.push({heading:k,dataType:v, sortType:v1});
+        });
+      });
+      scope.cols = obj;
+      // scope.Utils = {
+      //    keys : Object.keys,
+      //    values : Object.values
+      // }
+      var api = $injector.get(attrs.api);
+
+      scope.data = [];
+
+      // scope.loadingTable = true;
+      $loading.start('crudTable1');
+      scope.data =api.query(function() {
+
+        // scope.loadingTable = false;
+        $loading.finish('crudTable1');
+        socket.syncUpdates(attrs.api.toLowerCase(), scope.data);
+
+
+    //    console.log(currentUser)
+
+
+
+
+
+
+    /*    for (var i=0;i<scope.data.length;i++)
+        {
+
+        console.log(scope.data[i].uid)
+
+        }*/
+      });
+      scope.edit = function(item) {
+        var title; if(item._id){ title = 'Editing ' + item._id;} else{ title = 'Add New';}
+        Modal.show(item,{title:title, api:attrs.api, columns: obj, disabledColumn: attrs.disabledcolumn});
+      };
+      scope.changeActive = function(b){ // success handler
+        b.active = !b.active;
+        api.update({ id:b._id }, b).$promise.then(function() {
+
+        }, function(error) { // error handler
+          console.log(error);
+          toastr.error(error.statusText + ' (' +  error.status + ')');
+          b.active = !b.active;
+        });
+      };
+
+      scope.delete = function(item) {
+        api.delete({id:item._id});
+      };
+
+      scope.$on('$destroy', function () {
+        socket.unsyncUpdates(attrs.api.toLowerCase());
+      });
+    }
+  };}])

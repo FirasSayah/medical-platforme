@@ -1,0 +1,270 @@
+<link rel="stylesheet" href="../../bower_components/angular-tablesort/mdb.css" />
+<link rel="stylesheet" href="../../bower_components/angular-tablesort/style.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+
+<div style="margin-left: 70%;margin-top: -6%;position: absolute">
+  <a href="/association">
+    <button class="btn btn-success">Patient list</button>
+  </a>
+    <a href="/trackpatient">
+      <button class="btn btn-success"> Track patient</button>
+    </a>
+
+  <a href="/settings">
+    <button class="btn btn-success">Profile</button>
+  </a>
+</div>
+
+
+<div class="table table-hover"style="width: 120%">
+  <div class="panel panel-primary">
+    <div class="panel-heading green"> Patients with no doctor in charge
+
+      <div class="sw-search"style="background-color: transparent" >
+        <div class="nav-search" id="nav-search">
+                          <span class="input-icon">
+                              <input placeholder="Filter list ..." class="nav-search-input" ng-model="filter1" autocomplete="off" type="text" style="width:300px;" autofocus>
+                              <i class="search-icon fa fa-search nav-search-icon"></i>
+                          </span>
+        </div>
+      </div>
+
+      <!-- <span class="pull-right hidden-xs">
+        <div ng-hide="data.length>-1"><i class="fa fa-cog fa-3x fa-spin"></i>&nbsp;Loading</div>&nbsp;
+        <b>{{data.length}}</b> {{title}} found &nbsp;
+      </span> -->
+    </div>
+    <div class="panel-footer" style="background-color: transparent">
+
+    </div>
+    <div class="panel-body" style="background-color: transparent">
+      <table class="table table-striped" ts-wrapper>
+        <thead>
+        <tr>
+          <th>#</th>
+          <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}" >
+            {{c.heading | labelCase}}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- <i class="fa fa-cog fa-spin fa-2x" ng-if="loadingTable"></i> -->
+        <tr ng-repeat="p in data.slice().reverse() | filter:filter1 track by p._id"ng-show="(p.in=='association')" id="{{p._id}}" ts-repeat>
+          <td>{{$index+1}}</td>
+          <td ng-repeat="c in cols" ng-switch="c.dataType">
+            <span ng-switch-when="boolean"ng-if="(p.in=='association')">
+                        <button class="btn" ng-class="{true:'btn-success', false:''}[p[c.heading]]">{{p.active | active}}</button>
+                      </span>
+            <span ng-switch-when="Schema">
+                        <p  ng-class="[p[c.heading]]">No Availble informations</p>
+                      </span>
+            <span ng-switch-when="Number">
+                        <p  ng-class="[p[c.heading]]">No Availble informations</p>
+                      </span>
+            <span ng-switch-when="Mail">
+                        <p  ng-class="[p[c.heading]]">No Availble informations</p>
+                      </span>
+            <span ng-switch-default>
+                        {{p[c.heading]}}
+                      </span>
+          </td>
+          <td>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="table table-hover"style="width: 120%">
+  <div class="panel panel-primary">
+    <div class="panel-heading red">List of Patients with doctors in charge:
+
+      <div class="sw-search"style="background-color: transparent" >
+        <div class="nav-search" id="nav-search">
+                          <span class="input-icon">
+                              <input placeholder="Filter list ..." class="nav-search-input" ng-model="filter" autocomplete="on" type="text" style="width:300px;" autofocus>
+                              <i class="search-icon fa fa-search nav-search-icon"></i>
+                          </span>
+        </div>
+      </div>
+
+      <!-- <span class="pull-right hidden-xs">
+        <div ng-hide="data.length>-1"><i class="fa fa-cog fa-3x fa-spin"></i>&nbsp;Loading</div>&nbsp;
+        <b>{{data.length}}</b> {{title}} found &nbsp;
+      </span> -->
+    </div>
+    <div class="panel-footer" style="background-color: transparent">
+
+    </div>
+    <div class="panel-body" style="background-color: transparent">
+      <table class="table table-striped" ts-wrapper>
+        <thead>
+        <tr>
+          <th>#</th>
+          <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}" >
+            {{c.heading | labelCase}}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- <i class="fa fa-cog fa-spin fa-2x" ng-if="loadingTable"></i> -->
+        <tr ng-repeat="p in data.slice().reverse() | filter:filter track by p._id"ng-show="(p.in=='doctor' )" id="{{p._id}}" ts-repeat>
+          <td>{{$index+1}}</td>
+
+          <td ng-repeat="c in cols" ng-switch="c.dataType">
+
+                      <span ng-switch-when="boolean"ng-if="(p.in=='doctor')">
+                        <button class="btn" ng-class="{false:'btn-success', false:''}[p[c.heading]]">{{!p.active | active}}</button>
+                      </span>
+            <span ng-switch-when="Schema">
+                        <p  ng-class="[p[c.heading]]">{{p.doctor.name}}</p>
+                      </span>
+            <span ng-switch-when="Number">
+                        <p  ng-class="[p[c.heading]]">{{p.doctor.phone}}</p>
+                      </span>
+            <span ng-switch-when="Mail">
+                        <p  ng-class="[p[c.heading]]">{{p.doctor.email}}</p>
+                      </span>
+            <span ng-switch-default >
+                        {{p[c.heading]}}
+                      </span>
+          </td>
+          <td>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="table table-hover"style="width: 120%">
+  <div class="panel panel-primary">
+    <div class="panel-heading blue">List of Patients with hotel in charge:
+
+      <div class="sw-search"style="background-color: transparent" >
+        <div class="nav-search" id="nav-search">
+                          <span class="input-icon">
+                              <input placeholder="Filter list ..." class="nav-search-input" ng-model="filter2" autocomplete="on" type="text" style="width:300px;" autofocus>
+                              <i class="search-icon fa fa-search nav-search-icon"></i>
+                          </span>
+        </div>
+      </div>
+
+      <!-- <span class="pull-right hidden-xs">
+        <div ng-hide="data.length>-1"><i class="fa fa-cog fa-3x fa-spin"></i>&nbsp;Loading</div>&nbsp;
+        <b>{{data.length}}</b> {{title}} found &nbsp;
+      </span> -->
+    </div>
+    <div class="panel-footer" style="background-color: transparent">
+
+    </div>
+    <div class="panel-body" style="background-color: transparent">
+      <table class="table table-striped" ts-wrapper>
+        <thead>
+        <tr>
+          <th>#</th>
+          <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}" >
+            {{c.heading | labelCase}}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- <i class="fa fa-cog fa-spin fa-2x" ng-if="loadingTable"></i> -->
+        <tr ng-repeat="p in data.slice().reverse() | filter:filter2 track by p._id"ng-show="(p.in=='hotel' )" id="{{p._id}}" ts-repeat>
+          <td>{{$index+1}}</td>
+
+          <td ng-repeat="c in cols" ng-switch="c.dataType">
+
+                      <span ng-switch-when="boolean"ng-if="(p.in=='hotel')">
+                        <button class="btn" ng-class="{false:'btn-success', false:''}[p[c.heading]]">{{!p.active | active}}</button>
+                      </span>
+            <span ng-switch-when="Schema">
+                        <p  ng-class="[p[c.heading]]">{{p.hotel.name}}</p>
+                      </span>
+            <span ng-switch-when="Number">
+                        <p  ng-class="[p[c.heading]]">{{p.hotel.phone}}</p>
+                      </span>
+            <span ng-switch-when="Mail">
+                        <p  ng-class="[p[c.heading]]">{{p.hotel.email}}</p>
+                      </span>
+            <span ng-switch-default >
+                        {{p[c.heading]}}
+                      </span>
+          </td>
+          <td>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="table table-hover"style="width: 120%">
+  <div class="panel panel-primary">
+    <div class="panel-heading elegant-color">List of Patients with Agency in charge:
+
+      <div class="sw-search"style="background-color: transparent" >
+        <div class="nav-search" id="nav-search">
+                          <span class="input-icon">
+                              <input placeholder="Filter list ..." class="nav-search-input" ng-model="filter2" autocomplete="on" type="text" style="width:300px;" autofocus>
+                              <i class="search-icon fa fa-search nav-search-icon"></i>
+                          </span>
+        </div>
+      </div>
+
+      <!-- <span class="pull-right hidden-xs">
+        <div ng-hide="data.length>-1"><i class="fa fa-cog fa-3x fa-spin"></i>&nbsp;Loading</div>&nbsp;
+        <b>{{data.length}}</b> {{title}} found &nbsp;
+      </span> -->
+    </div>
+    <div class="panel-footer" style="background-color: transparent">
+
+    </div>
+    <div class="panel-body" style="background-color: transparent">
+      <table class="table table-striped" ts-wrapper>
+        <thead>
+        <tr>
+          <th>#</th>
+          <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}" >
+            {{c.heading | labelCase}}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- <i class="fa fa-cog fa-spin fa-2x" ng-if="loadingTable"></i> -->
+        <tr ng-repeat="p in data.slice().reverse() | filter:filter2 track by p._id"ng-show="(p.in=='agency' )" id="{{p._id}}" ts-repeat>
+          <td>{{$index+1}}</td>
+
+          <td ng-repeat="c in cols" ng-switch="c.dataType">
+
+                      <span ng-switch-when="boolean"ng-if="(p.in=='agency')">
+                        <button class="btn" ng-class="{false:'btn-success', false:''}[p[c.heading]]">{{!p.active | active}}</button>
+                      </span>
+            <span ng-switch-when="Schema">
+                        <p  ng-class="[p[c.heading]]">{{p.agency.name}}</p>
+                      </span>
+            <span ng-switch-when="Number">
+                        <p  ng-class="[p[c.heading]]">{{p.agency.phone}}</p>
+                      </span>
+            <span ng-switch-when="Mail">
+                        <p  ng-class="[p[c.heading]]">{{p.agency.email}}</p>
+                      </span>
+            <span ng-switch-default >
+                        {{p[c.heading]}}
+                      </span>
+          </td>
+          <td>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

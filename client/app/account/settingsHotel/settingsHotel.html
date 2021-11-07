@@ -1,0 +1,222 @@
+<!-- Compiled and minified CSS -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+
+<div class="container" style="margin-left: 22%">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-12">
+      <div class="box">
+        <h3>Edit Profile</h3>
+        <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+
+          <div class="form-group">
+            <label>Current Password</label>
+
+            <input type="password" name="oldPassword" class="form-control" ng-model="user.oldPassword"
+                   mongoose-error placeholder="Old password"/>
+            <p class="help-block" ng-show="form.password.$error.mongoose">
+              {{ errors.other }}
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label>New Password</label>
+
+            <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
+                   ng-minlength="3"
+                   required placeholder="Set a new password"/>
+            <p class="help-block"
+               ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
+              Password must be at least 3 characters.
+            </p>
+          </div>
+          <div class="form-group"ng-show="isLoggedIn()" >
+            <label>New Name</label>
+            <input type="text" name="newName" class="form-control" ng-model="user.newName"
+                   ng-minlength="3"
+                   required placeholder="{{getCurrentUser().name}}">
+            <p class="help-block"
+               ng-show="(form.newName.$error.minlength || form.newName.$error.required) && (form.newName.$dirty || submitted)">
+              Name must be at least 3 characters.
+            </p>
+          </div>
+        <center>
+
+          <h2>Choose your location</h2>
+
+
+          <div id="dvMap" style="width: 700px; height: 500px;">
+          </div>
+        </center>
+
+
+
+          <div class="form-group" ng-class="{ 'has-success': form.neweMail.$valid && submitted,
+                                                  'has-error': form.neweMail.$invalid && submitted }"ng-show="isLoggedIn()" >
+            <label>Email</label>
+
+            <input type="email" name="neweMail" class="form-control" ng-model="user.neweMail"
+                   required
+                   mongoose-error placeholder="{{getCurrentUser().email}}"/>
+            <p class="help-block" ng-show="form.neweMail.$error.neweMail && submitted">
+              Doesn't look like a valid email.
+            </p>
+            <p class="help-block" ng-show="form.neweMail.$error.required && submitted">
+              What's your email address?
+            </p>
+            <p class="help-block" ng-show="form.neweMail.$error.mongoose">
+              {{ errors.neweMail }}
+            </p>
+
+          </div>
+
+
+
+
+          <p class="help-block"> {{ message }} </p>
+
+          <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiPsrwiJnGZmu3MGDppHm8XX8cl9NK25s&pl&libraries=places&callback=initMap" async defer></script>
+
+<script>
+  function initMap($script){
+    var mapOptions = {
+      center: new google.maps.LatLng(36.8, 10.1),
+      zoom: 7,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    var infoWindow = new google.maps.InfoWindow();
+    var latlngbounds = new google.maps.LatLngBounds();
+    var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+    google.maps.event.addListener(map,
+      'click',
+      function (e) {
+        marker.setPosition(e.latLng);
+        /*marke
+         $('#lat').val(lat);
+         $('#lng').val(lng);*/
+        /*$.ajax({
+         url: "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=true",
+         success: function (res) {
+         console.log(res.results[0].formatted_address);
+         }
+         })*/
+        var latlng = marker.getPosition();
+        var geocoder = geocoder = new google.maps.Geocoder();
+        console.log($("input[name='newlocation']"));
+
+        geocoder.geocode({ 'latLng': latlng },
+          function (results, status) {
+            console.log($("input[name='newlocation']"));
+
+            if (status == google.maps.GeocoderStatus.OK) {
+              var country = results[results.length-1].formatted_address;
+              $("input[name='newlocation']").val(country);
+              $("input[name='newlocation']").attr('[ng-model="user.newlocation"]',country);
+              console.log("erthj,n");
+
+            }
+          });
+      }
+
+    );
+    marker = new google.maps.Marker({
+      map: map,
+      draggable: true,
+      animation: google.maps.Animation.DROP,
+      position: { lat: 36.8, lng: 10.1 }
+    });
+    marker.addListener('click', toggleBounce);
+    //marker.setPosition(tx);
+    google.maps.event.addListener(marker,
+      'dragend',
+      function () {
+        var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+        /*marke
+         $('#lat').val(lat);
+         $('#lng').val(lng);*/
+        /*$.ajax({
+         url: "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=true",
+         success: function (res) {
+         console.log(res.results[0].formatted_address);
+         }
+         })*/
+        var latlng = new google.maps.LatLng(lat, lng);
+        var geocoder = geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'latLng': latlng },
+          function (results, status) {
+            console.log(results);
+            if (status == google.maps.GeocoderStatus.OK) {
+              var country = results[results.length - 1].formatted_address;
+              $("input[name='newlocation']").val(country);
+              $("input[name='newlocation']").attr('ng-init',country);
+              window.loca=results[results.length - 1].formatted_address;
+            }
+          });
+      });
+    google.maps.event.addListener(marker,
+      'tx',
+      function () {
+        var tx = marker.setPosition().tx();
+        $('#tx').val(tx);
+
+      });
+  }
+
+  function toggleBounce() {
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  }
+
+
+
+</script>
+

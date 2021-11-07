@@ -1,0 +1,109 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+<style>
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+    margin-left: 15%;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .input-field input[type=date]:focus + label,
+  .input-field input[type=text]:focus + label,
+  .input-field input[type=email]:focus + label,
+  .input-field input[type=password]:focus + label {
+    color: #e91e63;
+  }
+
+  .input-field input[type=date]:focus,
+  .input-field input[type=text]:focus,
+  .input-field input[type=email]:focus,
+  .input-field input[type=password]:focus {
+    border-bottom: 2px solid #e91e63;
+    box-shadow: none;
+  }
+  img.animated-gif{
+    width: 25%;
+    height: auto;
+  }
+</style>
+<div class="section"></div>
+
+
+<main>
+  <center>
+    <a href="/dashboard"> <img class="animated-gif" src="/assets/img/Hotel.gif"/></a>
+    <div class="section"></div>
+
+    <h5 class="indigo-text">Please, login into your account</h5>
+    <div class="section"></div>
+
+    <div class="container">
+      <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;width: 40%">
+
+        <form class="col s20" ng-submit="login(form)" name="form" novalidate style="margin-left: 8%">
+          <div class='row'>
+            <div class='col s12'>
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class='input-field col s12'>
+              <input class='validate' type='email' name='email' id='email'ng-model="user.email" />
+              <label for='email'>Enter your email</label>
+              <p class="help-block" ng-show="form.email.$dirty && form.email.$error.required">
+                Please enter your email.
+              </p>
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class='input-field col s12'>
+              <input class='validate' type='password' name='password' id='password' ng-model="user.password"/>
+              <label for='password'>Enter your password</label>
+              <p class="help-block" ng-show="form.password.$dirty && form.password.$error.required">
+                Please enter your password.
+              </p>
+            </div>
+            <div class="form-group has-error">
+              <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && submitted">
+                Please enter your email and password.
+              </p>
+              <p class="help-block" ng-show="form.email.$error.email && submitted">
+                Please enter a valid email.
+              </p>
+
+              <p class="help-block">{{ errors.other }}</p>
+            </div>
+
+          </div>
+
+
+          <p class="help-block">{{ errors.other }}</p>
+          <br />
+          <center>
+            <div class='row'>
+              <button type='submit' name='btn_login' ng-disabled="form.$dirty && form.$invalid" class='col s12 btn btn-large waves-effect indigo'>Login</button>
+            </div>
+          </center>
+        </form>
+      </div>
+    </div>
+    <!-- <a href="/signup">Create account</a>-->
+  </center>
+
+  <div class="section"></div>
+  <div class="section"></div>
+</main>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
